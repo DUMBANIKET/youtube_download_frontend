@@ -83,7 +83,7 @@ const subm=async(e)=>{
    {post.map(po=>
       
       <><div>
-         {po.status===500 && <><h2>{po.qualityLabel}</h2></>}{po.status!==500 && <><h2>{po.qualityLabel}</h2><a href={po.url}> <button>Download</button></a></>}
+         {po.status===500 && <><h2>{po.qualityLabel}</h2></>}{po.status!==500 && <><h2>{po.qualityLabel}</h2><a href={po.url}> <button id="download" name="download">Download</button></a></>}
        <p>{po.mimeType}</p><br></br>{po.status===500 &&<p>Cannot load the preview</p>}{po.status!==500 &&<iframe src={po.url} title="video"></iframe>}</div><br></br><hr></hr>
       
       </>

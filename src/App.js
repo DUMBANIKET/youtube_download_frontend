@@ -5,7 +5,7 @@ import './style.css'
 
 function App() {
    const [loading,setLoading]=useState('')
-   const [count,setCount]=useState(0)
+   const [state,setState]=useState(false)
   const [post,setPosts]=useState([])
   const [vidurl,setVidurl]=useState('')
   const [status,setStatus]=useState('nothing here search to get the url')
@@ -16,7 +16,7 @@ const subm=async(e)=>{
    setStatus('')
   e.preventDefault();
   setLoading("Loading please wait")
-      fetch(api_url, {
+    const result=  fetch(api_url, {
          method: 'POST',
          body: JSON.stringify({
             url:vidurl
@@ -25,26 +25,34 @@ const subm=async(e)=>{
             'Content-type': 'application/json; charset=UTF-8',
          },
       })
-         .then((res) => res.json())
+         .then((res) => 
+            res.json())
          .then((post) => {
+            if(post.status===500){
+               setState(true)
+            }
             // setPosts((posts) => [post, ...posts]);
             setPosts(post)
             setLoading('')
+  
             
          })
          .catch((err) => {
             setErr(err.message)
-            console.log(err.message);
+       
             setLoading('')
+            setState(true)
          });
 
-}
+        
+      }
 // console.log(post)
   return (
     <>
   
    <div className="Formbox">
-   <h1>You Vid</h1>
+<center>   <h1>You Vid</h1></center>
+   <br></br>
    <form onSubmit={subm}>
 
 <center>
@@ -54,6 +62,7 @@ const subm=async(e)=>{
 </center>
    </form>
    <br></br>
+
    {/* {post.map((po)=>{
       // console.log(po.qualityLabel)
       <><div>
@@ -61,16 +70,29 @@ const subm=async(e)=>{
       </div></>
    })} */}
    <hr></hr>
-   {<h1>{err}</h1>}
+
+
+{
+   state && <h1>{status}</h1>
+
+}
+ 
+
+
+   {/* {<h1>{err}</h1>} */}
    {post.map(po=>
       
-      <><div><h2>{po.qualityLabel}</h2><a href={po.url}><button>Download</button></a><p>{po.mimeType}</p></div><br></br><hr></hr>
+      <><div>
+         {po.status===500 && <><h2>{po.qualityLabel}</h2></>}{po.status!==500 && <><h2>{po.qualityLabel}</h2><a href={po.url}> <button>Download</button></a></>}
+       <p>{po.mimeType}</p><br></br>{po.status===500 &&<p>Cannot load the preview</p>}{po.status!==500 &&<iframe src={po.url} title="video"></iframe>}</div><br></br><hr></hr>
       
       </>
    ) }
 
-   {<h2>{status}</h2>}
+   {/* {<h2>{status}</h2>} */}
    {<h2>{loading}</h2>}
+
+   
 </div>
     </>
   );

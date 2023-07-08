@@ -56,9 +56,9 @@ const subm=async(e)=>{
    <form onSubmit={subm}>
 
 <center>
-<input type="text" required value={vidurl}  onChange={(e)=>{setVidurl(e.target.value)}}></input>
+<input type="text" id="input" name="input" required value={vidurl}  onChange={(e)=>{setVidurl(e.target.value)}}></input>
     <br></br>
-    <button type="submit">Submit</button>
+    <button id="submit" name="submit" type="submit">Submit</button>
 </center>
    </form>
    <br></br>

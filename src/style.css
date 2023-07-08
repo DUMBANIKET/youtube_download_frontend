@@ -35,3 +35,8 @@
     font-size: 1rem;
     cursor: pointer;
 }
+
+iframe{
+    border-radius: 8px;
+    
+}
